@@ -36,6 +36,8 @@ def threaded_client(conn, p, gameId):
                 else:
                     if data == "reset":
                         game.resetWent()
+                    elif data[:4]=="nick":
+                        game.set_nickname(p,data[4:])
                     elif data != "get":
                         game.play(p, data)
 
@@ -59,7 +61,7 @@ def threaded_client(conn, p, gameId):
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
-
+    print("Conn:", conn)
     idCount += 1
     p = 0
     gameId = (idCount - 1)//2
