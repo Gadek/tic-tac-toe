@@ -6,7 +6,11 @@ class Game:
         self.id = id
         self.moves = [None, None]
         self.wins = [0,0]
+        self.names = ["player 1", "player 2"]
         self.ties = 0
+
+    def set_nickname(self,p,nick):
+        self.names[int(p)] = nick
 
     def get_player_move(self, p):
         """
@@ -38,10 +42,13 @@ class Game:
         p2 = self.moves[1].upper()[0]
 
         if p1 == p2:
+            self.ties += 1
             return -1
 
         if (((data[p1] | 1 << (2)) - (data[p2] | 0 << (2))) % 3):
+            self.wins[0] += 1
             return 0
+        self.wins[1] += 1
         return 1
 
     def resetWent(self):
